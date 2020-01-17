@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1072747353939",
+    "firebase_url": "https://polynomial-park-264602.firebaseio.com",
+    "project_id": "polynomial-park-264602",
+    "storage_bucket": "polynomial-park-264602.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072747353939:android:183be737ca7f63614173a6",
+        "android_client_info": {
+          "package_name": "com.example.junk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1072747353939-6voj50peduleuh4bto727gan1btg30gq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.junk",
+            "certificate_hash": "23c48fe58902a8cd4a89eb8549ecd2fb9c6e6d5d"
+          }
+        },
+        {
+          "client_id": "1072747353939-amdof34bdr02n2c2566r5jdvt86j6e8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyvGjy3py_u49vY_x0uiNPqJdkmFsL20g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1072747353939-amdof34bdr02n2c2566r5jdvt86j6e8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
