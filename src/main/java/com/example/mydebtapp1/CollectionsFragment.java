@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.junk.R;
+//import com.example.junk.R;
 
 
 /**

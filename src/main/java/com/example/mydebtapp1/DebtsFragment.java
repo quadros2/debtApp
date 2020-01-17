@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.junk.R;
+//import com.example.junk.R;
 
 
 /**

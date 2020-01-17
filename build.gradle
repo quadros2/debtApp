@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.junk"
+        applicationId "com.example.mydebtapp1"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
