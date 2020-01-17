@@ -8,6 +8,17 @@
     <LinearLayout
         android:id="@+id/TheirDebts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:layout_height="608dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addTheirDebt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="75dp"
+        android:text="Add +" />
+
 </FrameLayout>

@@ -1,12 +1,23 @@
 package com.example.mydebtapp1;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 //import com.example.junk.R;
 
@@ -16,6 +27,11 @@ import androidx.fragment.app.Fragment;
  */
 public class CollectionsFragment extends Fragment {
 
+    Button add;
+
+    LinearLayout addedDebt;
+
+    DebtClassToPush debtClassToPush;
 
     public CollectionsFragment() {
         // Required empty public constructor
@@ -26,7 +42,43 @@ public class CollectionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_collections, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_collections, container, false);
+
+        addedDebt = rootView.findViewById(R.id.TheirDebts);
+
+        FirebaseDatabase.getInstance().getReference().child("User")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Their Debt")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            View debtChunk = getLayoutInflater().inflate(R.layout.chunk_your_debt, addedDebt, false);
+                            debtClassToPush = snapshot.getValue(DebtClassToPush.class);
+                            TextView recipient = debtChunk.findViewById(R.id.NameRecipient);
+                            recipient.setText("From: " + debtClassToPush.getRecipient());
+                            TextView amount = debtChunk.findViewById(R.id.AmountStated);
+                            String currency = debtClassToPush.getCurrency();
+                            amount.setText(currency + debtClassToPush.getAmount());
+                            TextView dateCreated = debtChunk.findViewById(R.id.Datecreated);
+                            dateCreated.setText("Date Owed: " + debtClassToPush.getDate());
+                            TextView description = debtChunk.findViewById(R.id.Description);
+                            description.setText("Description: " + debtClassToPush.getDescription());
+                            addedDebt.addView(debtChunk);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+        add = rootView.findViewById(R.id.addTheirDebt);
+        add.setOnClickListener(V -> {
+            Intent intent = new Intent(getContext(), WriteDebt.class);
+            startActivity(intent);
+        });
+
+        return rootView;
     }
 
 }

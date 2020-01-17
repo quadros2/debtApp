@@ -30,7 +30,7 @@ public class DebtsFragment extends Fragment {
 
     Button add;
 
-    ScrollView addedDebt;
+    LinearLayout addedDebt;
 
     DebtClassToPush debtClassToPush;
 
@@ -52,18 +52,22 @@ public class DebtsFragment extends Fragment {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //DataSnapshot contactSnapshot = dataSnapshot.child("My Debt");
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             View debtChunk = getLayoutInflater().inflate(R.layout.chunk_your_debt, addedDebt, false);
+                            debtClassToPush = new DebtClassToPush();
                             debtClassToPush = snapshot.getValue(DebtClassToPush.class);
                             TextView recipient = debtChunk.findViewById(R.id.NameRecipient);
-                            recipient.setText(debtClassToPush.getRecipient());
+                            recipient.setText("To " + debtClassToPush.getRecipient());
                             TextView amount = debtChunk.findViewById(R.id.AmountStated);
-                            amount.setText(debtClassToPush.getAmount());
+                            String currency = debtClassToPush.getCurrency();
+                            amount.setText(currency + debtClassToPush.getAmount());
                             TextView dateCreated = debtChunk.findViewById(R.id.Datecreated);
-                            dateCreated.setText(debtClassToPush.getDate());
+                            dateCreated.setText("Date Created: " + debtClassToPush.getDate());
                             TextView description = debtChunk.findViewById(R.id.Description);
-                            description.setText(debtClassToPush.getDescription());
+                            description.setText("Description: " + debtClassToPush.getDescription());
                             addedDebt.addView(debtChunk);
+                            System.out.println("x");
                         }
                     }
 

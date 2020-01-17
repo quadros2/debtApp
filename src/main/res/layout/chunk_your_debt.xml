@@ -18,17 +18,18 @@
             android:id="@+id/AmountStated"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/Datecreated"
-            android:layout_width="422dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/Description"
-            android:layout_width="426dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
     </LinearLayout>
