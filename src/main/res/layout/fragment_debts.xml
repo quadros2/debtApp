@@ -7,13 +7,12 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/MyDebts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="606dp">
 
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/addDebts"
