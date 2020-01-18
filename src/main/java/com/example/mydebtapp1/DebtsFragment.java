@@ -3,11 +3,15 @@ package com.example.mydebtapp1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -17,8 +21,13 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 //import com.example.junk.R;
 
@@ -30,9 +39,11 @@ public class DebtsFragment extends Fragment {
 
     Button add;
 
-    LinearLayout addedDebt;
+    ListView addedDebt;
 
-    DebtClassToPush debtClassToPush;
+    DatabaseReference databaseReference;
+
+    List<DebtClassToPush> debts;
 
     public DebtsFragment() {
         // Required empty public constructor
@@ -45,37 +56,14 @@ public class DebtsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_debts, container, false);
 
-        addedDebt = rootView.findViewById(R.id.MyDebts);
+        databaseReference = FirebaseDatabase.getInstance().getReference("myDebt_" +
+                FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        FirebaseDatabase.getInstance().getReference().child("User")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("My Debt")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //DataSnapshot contactSnapshot = dataSnapshot.child("My Debt");
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            View debtChunk = getLayoutInflater().inflate(R.layout.chunk_your_debt, addedDebt, false);
-                            debtClassToPush = new DebtClassToPush();
-                            debtClassToPush = snapshot.getValue(DebtClassToPush.class);
-                            TextView recipient = debtChunk.findViewById(R.id.NameRecipient);
-                            recipient.setText("To " + debtClassToPush.getRecipient());
-                            TextView amount = debtChunk.findViewById(R.id.AmountStated);
-                            String currency = debtClassToPush.getCurrency();
-                            amount.setText(currency + debtClassToPush.getAmount());
-                            TextView dateCreated = debtChunk.findViewById(R.id.Datecreated);
-                            dateCreated.setText("Date Created: " + debtClassToPush.getDate());
-                            TextView description = debtChunk.findViewById(R.id.Description);
-                            description.setText("Description: " + debtClassToPush.getDescription());
-                            addedDebt.addView(debtChunk);
-                            System.out.println("x");
-                        }
-                    }
+        addedDebt = rootView.findViewById(R.id.listViewMyDebts);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+        onStart();
 
-                    }
-                });
+        debts = new ArrayList<>();
 
         add = rootView.findViewById(R.id.addDebts);
         add.setOnClickListener(V -> {
@@ -86,4 +74,26 @@ public class DebtsFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                debts.clear();
+                for (DataSnapshot debtSnapshot : dataSnapshot.getChildren()) {
+                    DebtClassToPush debtClassToPush = debtSnapshot.getValue(DebtClassToPush.class);
+                    debts.add(debtClassToPush);
+                }
+                DebtClassToRetrieve adapter = new DebtClassToRetrieve(getActivity(), debts);
+                addedDebt.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

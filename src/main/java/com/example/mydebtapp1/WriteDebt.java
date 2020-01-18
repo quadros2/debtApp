@@ -67,11 +67,11 @@ public class WriteDebt extends AppCompatActivity {
             String setDate = date.getText().toString().trim();
             String setCurrency = currency.getSelectedItem().toString().trim();
             if (IOU.isChecked()) {
-                mDatabase = FirebaseDatabase.getInstance().getReference().child("User")
-                        .child( FirebaseAuth.getInstance().getCurrentUser().getUid()).child("My Debt");
+                mDatabase = FirebaseDatabase.getInstance().getReference()
+                        .child("myDebt_" + FirebaseAuth.getInstance().getCurrentUser().getUid());
             } else {
-                mDatabase = FirebaseDatabase.getInstance().getReference().child("User")
-                        .child( FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Their Debt");
+                mDatabase = FirebaseDatabase.getInstance().getReference()
+                        .child("theirDebt_" + FirebaseAuth.getInstance().getCurrentUser().getUid());
             }
             debtClassToPush.setAmount(setAmount);
             debtClassToPush.setDate(setDate);
