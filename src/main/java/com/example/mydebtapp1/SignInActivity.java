@@ -62,6 +62,10 @@ public class SignInActivity extends AppCompatActivity {
                 Toast.makeText(this, "password is missing", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (password.length() < 6) {
+                Toast.makeText(getApplicationContext(), "Password must be longer than 6 characters", Toast.LENGTH_LONG).show();
+                return;
+            }
 
 
             firebaseAuth.createUserWithEmailAndPassword(email, password)

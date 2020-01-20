@@ -51,7 +51,15 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(V -> {
             email = emailEntry.getText().toString();
+            if (email.length() == 0) {
+                Toast.makeText(getApplicationContext(), "Enter E-mail", Toast.LENGTH_LONG).show();
+                return;
+            }
             password = passwordEntry.getText().toString();
+            if (password.length() == 0) {
+                Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_LONG).show();
+                return;
+            }
             logInFlow(email, password);
         });
         Button signinButton = findViewById(R.id.signInButton);

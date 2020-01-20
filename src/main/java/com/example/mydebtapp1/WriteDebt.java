@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class WriteDebt extends AppCompatActivity {
 
     EditText name;
-    EditText date;
     EditText amount;
     EditText description;
 
@@ -30,8 +33,6 @@ public class WriteDebt extends AppCompatActivity {
     Spinner currency;
 
     Button addButton;
-
-    boolean negativeValue;
 
     private DatabaseReference mDatabase;
 
@@ -43,7 +44,6 @@ public class WriteDebt extends AppCompatActivity {
         setContentView(R.layout.write_debt);
 
         name = findViewById(R.id.name);
-        date = findViewById(R.id.date);
         amount = findViewById(R.id.amount);
         description = findViewById(R.id.description);
 
@@ -63,10 +63,21 @@ public class WriteDebt extends AppCompatActivity {
 
         addButton.setOnClickListener(v -> {
             String setRecipient = name.getText().toString().trim();
+            if (name.length() == 0) {
+                Toast.makeText(getApplicationContext(), "Name is required", Toast.LENGTH_LONG).show();
+                return;
+            }
             String setAmount = amount.getText().toString().trim();
-            String setDate = date.getText().toString().trim();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            LocalDateTime now = LocalDateTime.now();
+            String setDate = dtf.format(now);
             String setCurrency = currency.getSelectedItem().toString().trim();
-            if (IOU.isChecked()) {
+
+            if (!(IOU.isChecked()) && !(YOM.isChecked())) {
+                Toast.makeText(getApplicationContext(), "Please select I owe them or They owe me",
+                        Toast.LENGTH_LONG).show();
+                return;
+            } else if (IOU.isChecked()) {
                 mDatabase = FirebaseDatabase.getInstance().getReference()
                         .child("myDebt_" + FirebaseAuth.getInstance().getCurrentUser().getUid());
             } else {
