@@ -99,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:ems="10"
+                android:hint="Optional"
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
 

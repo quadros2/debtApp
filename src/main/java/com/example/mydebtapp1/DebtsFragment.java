@@ -65,7 +65,7 @@ public class DebtsFragment extends Fragment {
 
         debts = new ArrayList<>();
 
-        add = rootView.findViewById(R.id.addDebts);
+        add = rootView.findViewById(R.id.addDebt);
         add.setOnClickListener(V -> {
             Intent intent = new Intent(getContext(), WriteDebt.class);
             startActivity(intent);

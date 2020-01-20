@@ -36,10 +36,10 @@ public class DebtClassToRetrieve extends ArrayAdapter<DebtClassToPush> {
 
         DebtClassToPush debtClassPulled = debtList.get(position);
 
-        recipient.setText(debtClassPulled.getRecipient());
+        recipient.setText("Name: " + debtClassPulled.getRecipient());
         amount.setText(debtClassPulled.getCurrency() + debtClassPulled.getAmount());
-        date.setText(debtClassPulled.getDate());
-        description.setText(debtClassPulled.getDescription());
+        date.setText("Date Created: " + debtClassPulled.getDate());
+        description.setText("Description: " + debtClassPulled.getDescription());
 
         return listItems;
     }
