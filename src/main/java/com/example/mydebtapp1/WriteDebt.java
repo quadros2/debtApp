@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -68,6 +69,10 @@ public class WriteDebt extends AppCompatActivity {
                 return;
             }
             String setAmount = amount.getText().toString().trim();
+            if (setAmount.length() == 0) {
+                Toast.makeText(getApplicationContext(), "Amount is required", Toast.LENGTH_LONG).show();
+                return;
+            }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             LocalDateTime now = LocalDateTime.now();
             String setDate = dtf.format(now);
