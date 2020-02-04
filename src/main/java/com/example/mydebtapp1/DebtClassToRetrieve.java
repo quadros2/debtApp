@@ -1,10 +1,12 @@
 package com.example.mydebtapp1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ public class DebtClassToRetrieve extends ArrayAdapter<DebtClassToPush> {
         this.debtList = debtList;
     }
 
+    //This controls the code to the inflated debts please continue here
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -33,6 +36,7 @@ public class DebtClassToRetrieve extends ArrayAdapter<DebtClassToPush> {
         TextView amount = listItems.findViewById(R.id.AmountStated);
         TextView date = listItems.findViewById(R.id.Datecreated);
         TextView description = listItems.findViewById(R.id.Description);
+        Button delete = listItems.findViewById(R.id.delete);
 
         DebtClassToPush debtClassPulled = debtList.get(position);
 
@@ -40,6 +44,10 @@ public class DebtClassToRetrieve extends ArrayAdapter<DebtClassToPush> {
         amount.setText(debtClassPulled.getCurrency() + debtClassPulled.getAmount());
         date.setText("Date Created: " + debtClassPulled.getDate());
         description.setText("Description: " + debtClassPulled.getDescription());
+        delete.setOnClickListener(V -> {
+            System.out.println("Y");
+            System.out.println(position);
+        });
 
         return listItems;
     }

@@ -40,6 +40,8 @@ public class CollectionsFragment extends Fragment {
 
     List<DebtClassToPush> debts;
 
+    Button delete;
+
     public CollectionsFragment() {
         // Required empty public constructor
     }
@@ -83,6 +85,7 @@ public class CollectionsFragment extends Fragment {
                 }
                 DebtClassToRetrieve adapter = new DebtClassToRetrieve(getActivity(), debts);
                 addedDebt.setAdapter(adapter);
+
             }
 
             @Override
